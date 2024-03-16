@@ -2,5 +2,5 @@ package org.example.exception;
 
 import java.io.IOException;
 
-public class InvalidModeException extends RuntimeException {
+public class InvalidSlotException extends RuntimeException {
 }

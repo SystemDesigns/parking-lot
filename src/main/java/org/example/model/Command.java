@@ -8,9 +8,22 @@ import java.util.stream.Collectors;
 
 public class Command {
 
-    private static final String SPACE = "";
-    private String commandName;
-    private List<String> params;
+    private static final String SPACE = " ";
+    private final String commandName;
+    private final List<String> params;
+
+    public Command(final String inputLine) {
+        final List<String> tokensList = Arrays.stream(inputLine.trim().split(SPACE))
+                .map(String::trim)
+                .filter(token -> !token.isEmpty())
+                .collect(Collectors.toList());
+
+        if (tokensList.isEmpty()) throw new InvalidCommandException();
+
+        commandName = tokensList.get(0).toLowerCase();
+        tokensList.remove(0);
+        params = tokensList;
+    }
 
     public String getCommandName() {
         return commandName;
@@ -18,18 +31,5 @@ public class Command {
 
     public List<String> getParams() {
         return params;
-    }
-
-    public Command(final String inputLine) throws InvalidCommandException {
-        final List<String> tokensList = Arrays.stream(inputLine.trim().split(SPACE))
-                .map(String::trim)
-                .filter(token -> !token.isEmpty())
-                .toList();
-
-        if (tokensList.isEmpty()) throw new InvalidCommandException();
-
-        commandName = tokensList.get(0).toLowerCase();
-        tokensList.remove(0);
-        params = tokensList;
     }
 }
